@@ -1,5 +1,8 @@
 --- Software: Estimación Constante Dielectrica del Suelo ---
 
+'arellana.javier.e@gmail.com'
+'eugenianoelg@gmail.com'
+
 Grupo de Teledetección - Instituto de Astronomía y Fisica del Espacion - UBA-CONICET
 
 
