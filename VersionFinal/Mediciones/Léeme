@@ -1,0 +1,17 @@
+Estas carpetas y programas componen la version funcional de la automatizacion.
+
+
+Descripcion por carpetas y programas: 
+
+* antena_v5.py es la funcion principal que funciona con la antena y el arduino conectado. En este se llama a programa2_v3.py y a parspyfunc_v2.py. 
+
+* programa4.py controla el motor y el magnetometro mediante conexion serial. 
+
+* parspyfunc_v2.py desgloza datos del receptor gps.
+
+* AutomatizacionV2 contiene la correcion del modelo anterior. El programa de arduino recibe instrucciones mediante serial las cuales inician el motor o el magnetometro.
+
+* Calibracion contiene la subcarpeta * magnetomotor *, en este se tiene el programa que activa el motor y el magneto al mismo tiempo para medir el patron en los ejes X e Y en 360 grados. El programa magneto.py es quien toma los datos de este y los almacena en un archivo "magneto.out". Este ultimo se analiza con el programa "calibracion2.py", el cual muestra en pantalla los valores de correcion de cada    eje. Estos se insertan en el programa "AutomatizacionV2.ino"
+
+
+Para que funciones todo se deberia cargar AutomatizacionV2 a la placa arduino y conectarla junto con la antena. Modificar en antena_v5.py el satelite a seguir.

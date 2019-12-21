@@ -1,0 +1,21 @@
+Estos son los programas finales utilizados durante la primera mitad del proyecto.
+La explicacion extensa de cada uno se encuentra en cada archivo correspondiente.
+
++ antena.py: 
+Realiza la conexion antena-pc mediante mediante la comunicacion serial. El baud rate utilizado es de 9600 baudios. Este crear un archivo llamado "%y%m%dPRN#%H:%M:%S.out", en donde denota la fecha de adquisicion y el horario, "#" es el numero del satelite a seguir (Si el satelite es de un unico digito, debe ser antepuesto con cero, ej: prn6 -> prn06). 
+El formato del nombre es estricto ya que los demas programas utilizan este para procesar los datos. La cantidad de datos tomados debe ser debe ser mayor a la cantidad de lineas esperadas (considerando que cada medicion por segundo contiene 4 lineas), cortando la medicion en cualquier momento que se desee sin riesgo de perder datos.
+
++ parspyfunc.py:
+Este programa ordena datos en formato NMEA-183 y grafica los parametros de interes de un satelite GPS seleccionado. Devuelve los angulos de elevacion y azimutal, asi como la intensidad 
+
++ filtpyfunc_v2.py:
+Es un filtro pasa bajos utilizado para eliminar el ruido de la adquisición, siendo este de frecuencia mucho mayor a la del patron de interferencia.
+
++ ModeloRecortado.py:
+Modelo teorico spm-2 integrado mediante cuadratura gaussiana
+
++ simualacionParametros.py:
+Barrido de parametros de interes por grilla. Calcula la curva que minimiza el desplazamiento cuadratico medio respecto a la medicion analizada.
+
+
+
