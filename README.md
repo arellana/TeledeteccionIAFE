@@ -1,0 +1,81 @@
+--- Software: Estimación Constante Dielectrica del Suelo ---
+
+'arellana.javier.e@gmail.com'
+'eugenianoelg@gmail.com'
+
+Grupo de Teledetección - Instituto de Astronomía y Fisica del Espacion - UBA-CONICET
+
+
+IMPORTANTE:
+La version util de los programas se encuentran en la carpeta 'VersionFinal'. En este documento se expone de forma detallada la funcionalidad y la forma de utilizar el software.
+
+-------------------------------------
+
+*/VersionFinal/Mediciones:
+
+1) Programas principales
+2) Calibracion
+3) Programa Arduino
+
+-------------------------------------
+
+1) Programas principales
+
+
+--'antena_v5.py'-- 
+Es el programa base de adquisicion de datos, este controla el hardware y guarda los datos del satelite (intensidad, angulo azimutal y angulo de elevacion), por otro lado guarda el angulo azimutal de forma separada. 
+Para que funcione de forma correcta se debe conectar a la computadora el receptor GPS (con antena) y el sistema de automatizacion basado en ArduinoUNO, ambos mediante conexion USB. 
+
+En primer lugar se debe indicar el satelite al cual se quiere seguir, luego llama a la funcion 'reorientacion' para medir el angulo polar al que apunta el satelite y reorienta hacia el norte mediante el programa 'motorNorte'.
+Las linea a medir del receptor GPS se especifica en el programa (De conveniencia debe ser mayor a la cantidad deseada).
+
+En el loop se compara el angulo a tiempo real del satelite con el angulo de la antena, en caso de tener una diferencia mayor a 3 grados se reorienta, corroborando esto en cada paso del loop.
+
+En caso de querer terminar la medicion antes de que termine el loop se puede abortar el proceso sin riesgos de perder los datos.
+
+
+
+--'parpyfunc_v2.py'-- 
+Toma como argumento cada una de las lineas del formato NMEA-183, recupera los datos correspondientes a las lineas GPGSV y de este el satelite de interes.
+Por ultimo guarda en angulo de elevación y angulo azimutal. 
+
+
+
+--'programa2_v3.py--
+Esta version esta pensado en 2 programas principales: reorientacion y motorNorte.
+
+*reorientacion no tiene argumento. Solo enciende el magnetometro, toma un promedio sobre cada eje y calcula el angulo actual de la antena. Devuelve este ultimo redondeado.
+ 
+*motornorte(arg1,arg2):
+motor recibe en arg1 el angulo actual del satelite a analizar y en arg2 el angulo
+azimutal de la antena.
+Este funciona con "AutomatizacionV2.ino" montado sobre dicha plaqueta.
+No tiene valor de retorno.
+
+Las instrucciones son enviada por serial como una cadena del estilo "1,0" y "i,j" con i = 2,3 y j un entero.
+
+
+
+2) Calibracion
+
+--'/magnetomotor/magnetomotor.ino'--
+
+Este programa debe cargarse a la plaqueta ArduinoUNO en caso de querer realizar una calibración del magnetometro AK8963 integrado en el modulo MPU 9250. Realiza simplemente un giro continuo el motor paso a paso modelo 28byj-48 y mide de cada 100ms la intensidad sobre cada eje del magnetometro.
+
+
+
+--'magneto.py'--
+Conecta con arduino y toma las mediciones de 'magnetomotor.ino'. Los guarda en un archivo llamado 'calibracion.out'.
+
+
+
+--'calibracion2.py'--
+Grafica los planos XY, XZ e YZ de la intensidad medida sobre cada eje mediante los datos levantados con el progama "magneto.py", así como el angulo azimutal en función del numero de medicion. Realiza la corrección de cada eje y vuelve a graficar los planos y azimut.
+El angulo azimut está desplazado para medir como una brujula convencional en el intervalo [0°,360°) en vez del pre-set [-pi/2, pi/2] en radianes.
+
+
+
+3) Programa Arduino
+
+--'AutomatizacionV2.ino'--
+Para que este programa funcione de forma correcta debe estar conectado a la plaqueta ArduinoUNO un motor paso a paso modelo 28byj-48 con su controlador ULN2003. Junto con el magnetometro MPU9250.
