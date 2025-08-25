@@ -1,6 +1,3 @@
-Aquí te paso una versión estilizada como **README.md** de GitHub para tu proyecto. Le di formato con Markdown, jerarquías claras de títulos y secciones, bloques de código para nombres de archivos y una estructura típica de documentación de software.
-
-
 # 🌱 Software: Estimación de la Constante Dieléctrica del Suelo
 
 **Autores:**  
